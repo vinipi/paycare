@@ -14,7 +14,9 @@ jobs:
       - name: install deps
         run: pip install -r requirements.txt; pip install pytest
       - name: Run tests
-        run: pytest -v
+        env:
+          PYTHONPATH: ${{ github.workspace }} 
+        run: python -m pytest -v
       - name: Build Docker Image
         run: docker build -t paycare-etl .
       - name: Run the container
