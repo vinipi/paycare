@@ -10,7 +10,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4 # This action clones the content of the current repo into the remote runner
       - name: Set up python
-        uses: actions/setup-python
+        uses: actions/setup-python@v7
       - name: install deps
         run: pip install -r requirements.txt; pip install pytest
       - name: Run tests
@@ -20,4 +20,4 @@ jobs:
       - name: Run the container
         run:  docker run --rm -v $(pwd)/data:/app/data paycare-etl # run the container with appropriate volume
       - name: upload artifacts
-        uses: actions/upload-artifact
+        uses: actions/upload-artifact@v7
