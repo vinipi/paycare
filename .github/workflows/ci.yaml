@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # This action clones the content of the current repo into the remote runner
+      - name: Set up python
+        uses: actions/setup-python
+      - name: install deps
+        run: pip install -r requirements.txt; pip install pytest
+      - name: Run tests
+        run: pytest -v
+      - name: Build Docker Image
+        run: docker build -t paycare-etl .
+      - name: Run the container
+        run:  docker run --rm -v $(pwd)/data:/app/data paycare-etl # run the container with appropriate volume
+      - name: upload artifacts
+        uses: actions/upload-artifact
